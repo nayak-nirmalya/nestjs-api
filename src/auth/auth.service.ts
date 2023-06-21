@@ -17,12 +17,8 @@ export class AuthService {
         email: dto.email,
         hash,
       },
-      select: {
-        id: true,
-        email: true,
-        createdAt: true,
-      },
     });
+    delete user.hash;
 
     // return saved user
     return user;
