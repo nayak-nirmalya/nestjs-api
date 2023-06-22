@@ -8,8 +8,7 @@ import { JwtGuard } from 'src/auth/guard';
 @Controller('users')
 export class UserController {
   @Get('me')
-  getMe(@GetUser() user: User, @GetUser('email') email: string) {
-    console.log(email);
+  getMe(@GetUser() user: User) {
     return user;
   }
 
