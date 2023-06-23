@@ -6,6 +6,7 @@ import { AppModule } from '../src/app.module';
 import { PrismaService } from 'src/prisma/prisma.service';
 import { AuthDto } from 'src/auth/dto';
 import { EditUserDto } from 'src/user/dto';
+import { CreateBookmarkDto } from 'src/bookmark/dto';
 
 describe('App e2e', () => {
   let app: INestApplication;
@@ -152,7 +153,28 @@ describe('App e2e', () => {
       });
     });
 
-    describe('Create Bookmark', () => {});
+    describe('Create Bookmark', () => {
+      const dto: CreateBookmarkDto = {
+        title: 'First Bookmark',
+        link: 'https://portfolio-nayak-nirmalya.vercel.app/',
+        description: 'My Portfolio Website.',
+      };
+
+      it('should create bookmark', () => {
+        return pactum
+          .spec()
+          .post('/bookmarks')
+          .withHeaders({
+            Authorization: 'Bearer $S{userAt}',
+          })
+          .withBody(dto)
+          .expectStatus(201)
+          .expectBodyContains(dto.description)
+          .expectBodyContains(dto.title)
+          .expectBodyContains(dto.link);
+      });
+    });
+
     describe('Get Bookmark by ID', () => {});
     describe('Edit Bookmark by ID', () => {});
     describe('Delete Bookmark by ID', () => {});
