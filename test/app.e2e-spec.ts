@@ -56,6 +56,10 @@ describe('App e2e', () => {
           .expectStatus(400);
       });
 
+      it('should throw error if no body', () => {
+        return pactum.spec().post('/auth/signup').expectStatus(400);
+      });
+
       it('should signup', () => {
         return pactum
           .spec()
