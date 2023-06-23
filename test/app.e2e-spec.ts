@@ -210,7 +210,7 @@ describe('App e2e', () => {
         description: 'My Portfolio Website. Deployed to Vercel.',
       };
 
-      it('should editt bookmark by given id', () => {
+      it('should edit bookmark by given id', () => {
         return pactum
           .spec()
           .patch('/bookmarks/{id}')
@@ -227,6 +227,29 @@ describe('App e2e', () => {
       });
     });
 
-    describe('Delete Bookmark by ID', () => {});
+    describe('Delete Bookmark by ID', () => {
+      it('should delete bookmark by given id', () => {
+        return pactum
+          .spec()
+          .delete('/bookmarks/{id}')
+          .withPathParams('id', '$S{bookmarkId}')
+          .withHeaders({
+            Authorization: 'Bearer $S{userAt}',
+          })
+          .expectStatus(204);
+      });
+
+      it('should get empty bookmarks', () => {
+        return pactum
+          .spec()
+          .get('/bookmarks')
+          .withHeaders({
+            Authorization: 'Bearer $S{userAt}',
+          })
+          .expectStatus(200)
+          .expectBody([])
+          .expectJsonLength(0);
+      });
+    });
   });
 });
