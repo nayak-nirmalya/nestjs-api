@@ -40,6 +40,14 @@ describe('App e2e', () => {
     };
 
     describe('SignUp', () => {
+      it('should throw error if email empty', () => {
+        return pactum
+          .spec()
+          .post('/auth/signup')
+          .withBody({ password: 'hehehe' })
+          .expectStatus(400);
+      });
+
       it('should signup', () => {
         return pactum
           .spec()
