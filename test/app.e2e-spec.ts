@@ -139,8 +139,19 @@ describe('App e2e', () => {
   });
 
   describe('Bookmarks', () => {
+    describe('Get Empty Bookmarks', () => {
+      it('should get bookmarks', () => {
+        return pactum
+          .spec()
+          .get('/bookmarks')
+          .withHeaders({
+            Authorization: 'Bearer $S{userAt}',
+          })
+          .expectStatus(200);
+      });
+    });
+
     describe('Create Bookmark', () => {});
-    describe('Get Bookmarks', () => {});
     describe('Get Bookmark by ID', () => {});
     describe('Edit Bookmark by ID', () => {});
     describe('Delete Bookmark by ID', () => {});
