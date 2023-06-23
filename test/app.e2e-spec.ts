@@ -1,7 +1,7 @@
 import { Test } from '@nestjs/testing';
+import { INestApplication, ValidationPipe } from '@nestjs/common';
 
 import { AppModule } from '../src/app.module';
-import { INestApplication, ValidationPipe } from '@nestjs/common';
 import { PrismaService } from 'src/prisma/prisma.service';
 
 describe('App e2e', () => {
@@ -30,5 +30,24 @@ describe('App e2e', () => {
     app.close();
   });
 
-  it.todo('should pass');
+  describe('Auth', () => {
+    describe('SignUp', () => {
+      it.todo('should signup');
+    });
+
+    describe('SignIn', () => {});
+  });
+
+  describe('User', () => {
+    describe('Get Current User', () => {});
+    describe('Edit User', () => {});
+  });
+
+  describe('Bookmarks', () => {
+    describe('Create Bookmark', () => {});
+    describe('Get Bookmarks', () => {});
+    describe('Get Bookmark by ID', () => {});
+    describe('Edit Bookmark', () => {});
+    describe('Delete Bookmark', () => {});
+  });
 });
