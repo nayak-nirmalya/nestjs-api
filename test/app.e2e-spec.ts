@@ -44,7 +44,15 @@ describe('App e2e', () => {
         return pactum
           .spec()
           .post('/auth/signup')
-          .withBody({ password: 'hehehe' })
+          .withBody({ password: dto.password })
+          .expectStatus(400);
+      });
+
+      it('should throw error if password empty', () => {
+        return pactum
+          .spec()
+          .post('/auth/signup')
+          .withBody({ email: dto.email })
           .expectStatus(400);
       });
 
