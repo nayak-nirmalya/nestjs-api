@@ -6,7 +6,7 @@ import { AppModule } from '../src/app.module';
 import { PrismaService } from 'src/prisma/prisma.service';
 import { AuthDto } from 'src/auth/dto';
 import { EditUserDto } from 'src/user/dto';
-import { CreateBookmarkDto } from 'src/bookmark/dto';
+import { CreateBookmarkDto, EditBookmarkDto } from 'src/bookmark/dto';
 
 describe('App e2e', () => {
   let app: INestApplication;
@@ -203,7 +203,30 @@ describe('App e2e', () => {
       });
     });
 
-    describe('Edit Bookmark by ID', () => {});
+    describe('Edit Bookmark by ID', () => {
+      const dto: EditBookmarkDto = {
+        title: 'First Bookmark Edited.',
+        link: 'https://portfolio-nayak-nirmalya.vercel.app/',
+        description: 'My Portfolio Website. Deployed to Vercel.',
+      };
+
+      it('should editt bookmark by given id', () => {
+        return pactum
+          .spec()
+          .patch('/bookmarks/{id}')
+          .withPathParams('id', '$S{bookmarkId}')
+          .withHeaders({
+            Authorization: 'Bearer $S{userAt}',
+          })
+          .withBody(dto)
+          .expectStatus(200)
+          .expectBodyContains('$S{bookmarkId}')
+          .expectBodyContains(dto.description)
+          .expectBodyContains(dto.title)
+          .expectBodyContains(dto.link);
+      });
+    });
+
     describe('Delete Bookmark by ID', () => {});
   });
 });
